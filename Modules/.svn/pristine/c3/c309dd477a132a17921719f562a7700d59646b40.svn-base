@@ -1,4 +1,0 @@
-{
-"overrides":
-{"suitecommerce/Cart@3.0.0/JavaScript/Cart.Detailed.View.js":"JavaScript/Cart.Detailed.View.js","suitecommerce/Cart@3.0.0/JavaScript/Cart.Summary.View.js":"JavaScript/Cart.Summary.View.js"}
-}

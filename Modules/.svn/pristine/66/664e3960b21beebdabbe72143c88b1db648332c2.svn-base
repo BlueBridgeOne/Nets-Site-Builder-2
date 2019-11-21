@@ -1,4 +1,0 @@
-{
-"overrides":
-{"suitecommerce/OrderWizard.Module.PaymentMethod@3.0.0/JavaScript/OrderWizard.Module.PaymentMethod.Selector.js":"JavaScript/OrderWizard.Module.PaymentMethod.Selector.js","suitecommerce/OrderWizard.Module.PromocodeForm@2.0.0/JavaScript/OrderWizard.Module.PromocodeForm.js":"JavaScript/OrderWizard.Module.PromocodeForm.js","suitecommerce/Wizard@2.2.0/Sass/_wizard-step-navigation.scss":"Sass/_wizard-step-navigation.scss"}
-}
