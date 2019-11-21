@@ -1,0 +1,11 @@
+Vinson Site Builder 2
+
+Node: v4.8.7
+
+Most of the Customisations are superficial.
+
+Except:
+
+1. This is a hacked version of the advanced SB code combined with the original code in order to add the advanced B2B features. So that's why the entire project is in SVN.
+
+2. Reports module to add reports to the my account section of the site.

@@ -1,0 +1,41 @@
+{
+"gulp": {
+        "javascript": [
+            "JavaScript/*.js"
+        ],
+        "templates": [
+            "Templates/*"
+        ],
+        "ssp-libraries": [
+            "SuiteScript/*.js"
+        ],
+        "sass": [
+            "Sass/**/*.scss"
+        ],
+        "languages": [
+            "Languages/*.js"
+        ],
+        "images": [
+            "Images/*"
+        ]
+    },
+	"overrides":
+	{
+		"suitecommerce/Address@2.3.0/JavaScript/Address.Edit.Fields.View.js": "JavaScript/Address.Edit.Fields.View.js",
+		"suitecommerce/ApplicationSkeleton@2.3.0/JavaScript/ApplicationSkeleton.Layout.js": "JavaScript/ApplicationSkeleton.Layout.js",
+		"suitecommerce/GlobalImages@1.0.1/Images/no_image_available.jpeg": "Images/no_image_available.jpeg",
+		"suitecommerce/GlobalViews@1.3.0/Sass/_global-views-modal.scss": "Sass/_global-views-modal.scss",
+		"suitecommerce/GlobalViews@1.3.0/Templates/global_views_breadcrumb.tpl": "Templates/global_views_breadcrumb.tpl",
+		"suitecommerce/GlobalViews@1.3.0/Templates/global_views_states.tpl": "Templates/global_views_states.tpl",
+		"suitecommerce/ItemViews@1.3.0/JavaScript/ItemViews.Cell.Actionable.View.js": "JavaScript/ItemViews.Cell.Actionable.View.js",
+		"suitecommerce/ItemViews@1.3.0/JavaScript/ItemViews.Cell.Navigable.Actionable.View.js": "JavaScript/ItemViews.Cell.Navigable.Actionable.View.js",
+		"suitecommerce/ItemViews@1.3.0/JavaScript/ItemViews.Cell.Navigable.View.js": "JavaScript/ItemViews.Cell.Navigable.View.js",
+		"suitecommerce/ItemViews@1.3.0/Templates/item_views_cell_actionable.tpl": "Templates/item_views_cell_actionable.tpl",
+		"suitecommerce/ItemViews@1.3.0/Templates/item_views_cell_navigable.tpl": "Templates/item_views_cell_navigable.tpl",
+		"suitecommerce/LoginRegister@2.2.0/JavaScript/LoginRegister.Login.View.js": "JavaScript/LoginRegister.Login.View.js",
+		"suitecommerce/Profile@2.3.0/JavaScript/Profile.Information.View.js": "JavaScript/Profile.Information.View.js",
+		"suitecommerce/Profile@2.3.0/SuiteScript/Profile.Model.js": "SuiteScript/Profile.Model.js",
+		"suitecommerce/Quote@3.2.0/JavaScript/Quote.js": "JavaScript/Quote.js",
+		"suitecommerce/LiveOrder@3.0.0/SuiteScript/LiveOrder.Model.js":"SuiteScript/LiveOrder.Model.js"
+	}
+}
