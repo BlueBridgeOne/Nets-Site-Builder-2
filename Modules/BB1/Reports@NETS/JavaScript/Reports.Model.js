@@ -25,7 +25,7 @@ define('Reports.Model'
 	{
 		// @property {String} urlRoot
 		aurlRoot: 'services/Reports.Service.ss',
-		urlRoot:'/app/site/hosting/scriptlet.nl?script=451&deploy=1&compid=1064113&h=23e7d77875b9eb28b4c9&searchname=toppartsbyvalue&datefrom=02052018&datetill=02052018&customer=8073&fleet=16240&pagenumber=0'
+		urlRoot:'/app/site/hosting/scriptlet.nl?script=451&deploy=1&compid=1064113&h=23e7d77875b9eb28b4c9'
 }
 		
 	);

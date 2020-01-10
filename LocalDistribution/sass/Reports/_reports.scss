@@ -1,1 +1,52 @@
 .menu-tree-node-submenu-wrapper{padding-top:0;padding-bottom:0;}
+$sc-margin-lv1:5px;
+$sc-margin-lv2:10px;
+
+.list-header-view-datepicker-from,
+.list-header-view-datepicker-to {
+  @extend .datepicker-container;
+  margin-right: $sc-margin-lv2;
+  margin-bottom: $sc-margin-lv2;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  label {
+    display: inline-block;
+    margin-right: $sc-margin-lv2;
+
+    @media (max-width: $screen-sm-max) {
+      display: block;
+    }
+  }
+
+  .list-header-view-datepicker-container-input {
+    @extend .datepicker-container-input;
+    display: inline-block;
+
+    @media (max-width: $screen-sm-max) {
+      display: block;
+    }
+  }
+
+  @media (max-width: $screen-sm-max) {
+    width: 50%;
+    margin-right: 0;
+  }
+}
+.list-header-view-to{float:none;}
+.list-header-view-datepicker-from {
+    display:inline;
+  div.list-header-view-datepicker-container-input {
+    margin-right: $sc-margin-lv1;
+  }
+}
+
+.list-header-view-datepicker-to {
+    display:inline;
+  div.list-header-view-datepicker-container-input {
+    margin-left: $sc-margin-lv1;
+  }
+}
+

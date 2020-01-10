@@ -8,10 +8,10 @@
 //@module Reports
 define('Reports.Router', [
 
-	'Reports.Model', 'Reports.Value.View', 'Profile.Model', 'Backbone'
+	 'Reports.Value.View', 'Profile.Model', 'Backbone'
 ], function(
 
-	Model, ReportsValueView, ProfileModel, Backbone
+	 ReportsValueView, ProfileModel, Backbone
 ) {
 	'use strict';
 
@@ -34,14 +34,9 @@ define('Reports.Router', [
 
 			,
 		topPartsByValue: function() {
-			var model = new Model();
-			var view = new ReportsValueView({ application: this.application, model: model });
-
-
-			model.fetch()
-				.done(function(doc) {
-					view.showContent();
-				});
+			
+			var view = new ReportsValueView({ application: this.application, name: "toppartsbyvalue",title:"Top Parts by Value" });
+			view.showContent();
 		},
 		topPartsByQuantity: function() {
 			var view = new ReportsValueView({ application: this.application });

@@ -5,7 +5,34 @@
 	</a> {{/if}}
 <section class="reports-list">
 	<header class="transaction-history-list-header"><h2>{{pageHeader}}</h2></header>
-	<div data-view="ListHeader.View"></div>
+	
+	<div class="list-header-view-datepicker-from">
+							<label class="list-header-view-from" for="from">{{rangeFilterLabel}}</label>
+
+							<div class="list-header-view-datepicker-container-input">
+								<input class="list-header-view-accordion-body-input" id="from" name="from" type="date" autocomplete="off" data-format="yyyy-mm-dd" value="{{selectedRangeFrom}}" data-action="range-filter" data-todayhighlight="true"/>
+
+								<i class="list-header-view-accordion-body-calendar-icon"></i>
+								<a class="list-header-view-accordion-body-clear" data-action="clear-value">
+									<i class="list-header-view-accordion-body-clear-icon"></i>
+								</a>
+							</div>
+						</div>
+
+						<div class="list-header-view-datepicker-to">
+							<label class="list-header-view-to" for="to">{{translate 'to'}}</label>
+
+							<div class="list-header-view-datepicker-container-input">
+								<input class="list-header-view-accordion-body-input" id="to" name="to" type="date" autocomplete="off" data-format="yyyy-mm-dd" value="{{selectedRangeTo}}" data-action="range-filter" data-todayhighlight="true"/>
+
+								<i class="list-header-view-accordion-body-calendar-icon"></i>
+								<a class="list-header-view-accordion-body-clear" data-action="clear-value">
+									<i class="list-header-view-accordion-body-clear-icon"></i>
+								</a>
+							</div>
+						</div>
+
+
 	<div class="order-history-list-recordviews-container">
 		<table class="order-history-list-recordviews-actionable-table">
 			<thead class="order-history-list-recordviews-actionable-header">

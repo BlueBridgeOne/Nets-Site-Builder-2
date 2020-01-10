@@ -7,12 +7,12 @@
 
 //@module Reports
 define(
-	'Reports.Value.View', ['Backbone.CompositeView', 'ListHeader.View', 'SC.Configuration', 'reports_value.tpl'
+	'Reports.Value.View', ['Reports.Model', 'Backbone.CompositeView', 'ListHeader.View', 'SC.Configuration', 'reports_value.tpl'
 
 		, 'Backbone', 'underscore', 'jQuery', 'Utils'
 	],
-	function(
-		BackboneCompositeView, ListHeaderView, Configuration
+	function (
+		Model, BackboneCompositeView, ListHeaderView, Configuration
 
 		, reports_value_tpl
 
@@ -24,84 +24,160 @@ define(
 		return Backbone.View.extend({
 
 			template: reports_value_tpl
-
 				,
-			page_header: _('Top Parts by Value').translate()
+			initialize: function (options) {
 
-				,
-			title: _('Top Parts by Value').translate()
-
-				,
-			initialize: function(options) {
-				BackboneCompositeView.add(this);
-				var self = this;
 				this.application = options.application;
+				this.searchname = options.name;
+				this._title = options.title;
+				this.title=_(options.title).translate();
+				this.page_header=_(options.title).translate();
 
-				//This is a fake collection object that gets called by the list header.
-				this.callbackObj = {
-					update: function(options) {
-						
-						var Today=new Date();
-						Today=self.twoDigits(Today.getDay())+""+self.twoDigits(Today.getMonth())+""+self.twoDigits(Today.getFullYear());
-						console.log(Today);
-						if(options&&options.range&&options.range.from&&options.range.to){
-						console.log(options);
-						var datefrom=options.range.from.split("-").reverse().join("");
-						var datetill=options.range.to.split("-").reverse().join("");
-						console.log(datefrom+" "+datetill);
-						}
-					},
-					filter: function() {
 
-						var rows = [];
-						if (self.model.get(1)) {
-							return { length: self.model.get(1) };
-						} else {
-							return { length: 0 };
-						}
-					}
-				};
-				this.listHeader = new ListHeaderView({
-					view: this,
-					collection: this.callbackObj,
-					application: this.application,
-					rangeFilter: 'date',
-					rangeFilterLabel: _('From').translate(),
-					hidePagination: true
-				});
+				BackboneCompositeView.add(this);
+				
+				this.selectedRange = {};
+				this.selectedRange["to"] = this.formatDate(new Date());
+				var from = new Date();
+				from.setMonth(from.getMonth() - 1);
+				this.selectedRange["from"] = this.formatDate(from);
+
+				this.model = new Model();
+				this.update();
+
 
 			},
-twoDigits:function(num){
-if(num>9){
-return num.toString();
-}else{
-return "0"+num.toString();
-}
-}
-			,
-			childViews: {
-				'ListHeader.View': function() {
-					return this.listHeader;
+			update: function () {
+				var self = this;
+				//searchname=toppartsbyvalue&datefrom=02052018&datetill=02052018&customer=8073&fleet=16240&pagenumber=0
+				var datefrom = this.toNSDate(this.parseDate(this.selectedRange["from"]));
+				var datetill = this.toNSDate(this.parseDate(this.selectedRange["to"]));
+
+				this.model.fetch({
+						data: {
+							searchname: this.searchname,
+							t: new Date().getTime(),
+							datefrom: datefrom,
+							datetill: datetill,
+							customer: 8073,
+							fleet: 16240,
+							pagenumber: 0
+						}
+					})
+					.done(function () {
+						self.render();
+					});
+			},
+			events: {
+
+				/*
+				 * range-filter focus/blur work together to update the date range when:
+				 * Blur happens on a field and user don't focus on the other during a defined interval
+				 */
+				'focus [data-action="range-filter"]': 'clearRangeFilterTimeout',
+				'blur [data-action="range-filter"]': 'rangeFilterBlur',
+				'change [data-action="filter"]': 'changeFilter'
+			},
+			destroy: function () {
+					this.clearRangeFilterTimeout();
+					this._destroy();
+				} // @method rangeFilterBlur
+				,
+			changeFilter: function (e) {
+
+				this.currentFilter = e.target.value;
+
+				this.render();
+			},
+			rangeFilterBlur: function () {
+					this.clearRangeFilterTimeout();
+					this.rangeFilterTimeout = setTimeout(_.bind(this.rangeFilterHandler, this), 1000);
+				}
+
+				// @method clearRangeFilterTimeout
+				,
+			clearRangeFilterTimeout: function () {
+					if (this.rangeFilterTimeout) {
+						clearTimeout(this.rangeFilterTimeout);
+						this.rangeFilterTimeout = null;
+					}
+				}
+
+				// @method rangeFilterHandler
+				,
+			rangeFilterHandler: function () {
+				var selected_range = this.selectedRange,
+					$ranges = this.$('[data-action="range-filter"]');
+
+				$ranges.each(function () {
+					if (this.value) {
+						selected_range[this.name] = this.value;
+					} else {
+						delete selected_range[this.name];
+					}
+				});
+
+				this.update();
+				return this;
+			},
+			formatDate: function (d) {
+				var month = '' + (d.getMonth() + 1),
+					day = '' + d.getDate(),
+					year = d.getFullYear();
+
+				if (month.length < 2) {
+					month = '0' + month;
+				}
+				if (day.length < 2) {
+					day = '0' + day;
+				}
+
+				return [year, month, day].join('-');
+			},
+			toNSDate: function (d) {
+				var month = '' + (d.getMonth() + 1),
+					day = '' + d.getDate(),
+					year = d.getFullYear();
+
+				if (month.length < 2) {
+					month = '0' + month;
+				}
+				if (day.length < 2) {
+					day = '0' + day;
+				}
+
+				return [day, month, year].join('');
+			},
+			parseDate: function (d) {
+				var parts = d.split("-");
+				return new Date(parseInt(parts[0], 10),
+					parseInt(parts[1], 10) - 1,
+					parseInt(parts[2], 10));
+			},
+			twoDigits: function (num) {
+				if (num > 9) {
+					return num.toString();
+				} else {
+					return "0" + num.toString();
 				}
 			}
 			//@method getBreadcrumbPages
 			,
-			getBreadcrumbPages: function() {
+			getBreadcrumbPages: function () {
 					return {
-						text: this.title,
-						href: '/reports/top-parts-by-value'
+						text: this.title
 					};
 				}
 
 				//@method getContext @return {Reports.List.View.Context}
 				,
-			getContext: function() {
+			getContext: function () {
 				console.log(this.model);
 
 				var rows = [];
 				if (this.model.get(1)) {
 					rows = this.model.get(1);
-					console.log("Test: " + JSON.stringify(rows, null, 4));
+					//console.log("Test: " + JSON.stringify(rows, null, 4));
 					for (var i = 0; i < rows.length; i++) {
 						rows[i].salesdescription = rows[i].values['GROUP(item.salesdescription)'];
 						rows[i].upccode = rows[i].values['GROUP(item.upccode)'];
@@ -110,9 +186,11 @@ return "0"+num.toString();
 
 					}
 				}
-				console.log(rows);
+				console.log("rows",rows);
 				//@class Reports.List.View.Context
 				return {
+					selectedRangeTo: this.selectedRange["to"],
+					selectedRangeFrom: this.selectedRange["from"],
 					//@property {String} pageHeader
 					pageHeader: this.page_header
 						//@property {Boolean} showBackToAccount
